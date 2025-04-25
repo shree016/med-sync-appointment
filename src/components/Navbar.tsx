@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -37,6 +36,11 @@ const Navbar = () => {
           {user?.role === "doctor" && (
             <Link to="/doctor-dashboard" className="text-gray-600 hover:text-medical-600">
               Dashboard
+            </Link>
+          )}
+          {user?.role === "admin" && (
+            <Link to="/admin-dashboard" className="text-gray-600 hover:text-medical-600">
+              Admin Dashboard
             </Link>
           )}
         </div>
