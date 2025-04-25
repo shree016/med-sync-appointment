@@ -26,9 +26,26 @@ export interface Doctor extends User {
   phone?: string;
   address?: string;
   consultationFee?: number;
+  travelFee?: number;
+  providesHomeVisit: boolean;
   rating: number;
   reviewCount: number;
   availability: Availability[];
+}
+
+export interface HomeVisit {
+  id: string;
+  doctorId: string;
+  patientId: string;
+  doctorName: string;
+  patientName: string;
+  date: string;
+  time: string;
+  address: string;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected' | 'completed';
+  travelFee?: number;
+  createdAt: string;
 }
 
 export interface Availability {
