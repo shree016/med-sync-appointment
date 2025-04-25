@@ -1,4 +1,3 @@
-
 import { Doctor, Patient, Appointment, Specialization } from "../types";
 
 export const specializations: Specialization[] = [
@@ -30,6 +29,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.9,
     reviewCount: 127,
     avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    providesHomeVisit: true,
+    travelFee: 50,
     availability: [
       {
         day: "monday",
@@ -76,6 +77,7 @@ export const mockDoctors: Doctor[] = [
     rating: 4.8,
     reviewCount: 93,
     avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    providesHomeVisit: false,
     availability: [
       {
         day: "tuesday",
@@ -110,6 +112,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.9,
     reviewCount: 156,
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    providesHomeVisit: true,
+    travelFee: 40,
     availability: [
       {
         day: "monday",
@@ -152,6 +156,7 @@ export const mockDoctors: Doctor[] = [
     rating: 4.7,
     reviewCount: 118,
     avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+    providesHomeVisit: false,
     availability: [
       {
         day: "tuesday",
@@ -186,6 +191,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.8,
     reviewCount: 142,
     avatar: "https://randomuser.me/api/portraits/women/24.jpg",
+    providesHomeVisit: true,
+    travelFee: 45,
     availability: [
       {
         day: "monday",
@@ -298,5 +305,4 @@ export const mockAppointments: Appointment[] = [
   },
 ];
 
-// Create a mock current user (patient) for initial state
 export const mockCurrentUser: Patient = mockPatients[0];
