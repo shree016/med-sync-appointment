@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,9 +16,29 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // The role will be detected automatically in the login function
       await login(email, password);
-      // Navigation will be handled after role detection in the login function
+      
+      // After successful login, check local storage for user data to determine redirect
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const userData = JSON.parse(userString);
+        // Redirect based on user role
+        switch (userData.role) {
+          case "admin":
+            navigate("/admin-dashboard");
+            break;
+          case "doctor":
+            navigate("/doctor-dashboard");
+            break;
+          case "patient":
+            navigate("/appointments");
+            break;
+          default:
+            navigate("/");
+        }
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login error:", error);
     }
