@@ -6,12 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from "@/components/ui/tabs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -59,23 +54,6 @@ const Register = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="patient" className="w-full mb-4">
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger
-                value="patient"
-                onClick={() => setRegisterRole("patient")}
-              >
-                Patient
-              </TabsTrigger>
-              <TabsTrigger
-                value="doctor"
-                onClick={() => setRegisterRole("doctor")}
-              >
-                Doctor
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -97,6 +75,24 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+            </div>
+            <div className="space-y-3">
+              <Label>Account Type</Label>
+              <RadioGroup
+                defaultValue="patient"
+                value={registerRole}
+                onValueChange={(value) => setRegisterRole(value as "patient" | "doctor")}
+                className="flex flex-col space-y-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="patient" id="patient" />
+                  <Label htmlFor="patient">Patient</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="doctor" id="doctor" />
+                  <Label htmlFor="doctor">Doctor</Label>
+                </div>
+              </RadioGroup>
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>

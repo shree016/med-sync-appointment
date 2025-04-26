@@ -6,25 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from "@/components/ui/tabs";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginRole, setLoginRole] = useState<"patient" | "doctor">("patient");
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password, loginRole);
-      navigate(loginRole === "doctor" ? "/doctor-dashboard" : "/");
+      // The role will be detected automatically in the login function
+      await login(email, password);
+      // Navigation will be handled after role detection in the login function
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -40,23 +34,6 @@ const Login = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="patient" className="w-full mb-4">
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger
-                value="patient"
-                onClick={() => setLoginRole("patient")}
-              >
-                Patient
-              </TabsTrigger>
-              <TabsTrigger
-                value="doctor"
-                onClick={() => setLoginRole("doctor")}
-              >
-                Doctor
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
