@@ -4,13 +4,33 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Doctor } from "@/types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface DoctorCardProps {
   doctor: Doctor;
 }
 
 const DoctorCard = ({ doctor }: DoctorCardProps) => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleBookAppointment = () => {
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please login to book an appointment",
+        variant: "destructive",
+      });
+      navigate("/login");
+      return;
+    }
+    
+    navigate(`/doctors/${doctor.id}`);
+  };
+
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">
       <CardContent className="p-6">
@@ -56,8 +76,11 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
             </span>{" "}
             per visit
           </div>
-          <Button asChild className="bg-medical-600 hover:bg-medical-700">
-            <Link to={`/doctors/${doctor.id}`}>Book Appointment</Link>
+          <Button 
+            onClick={handleBookAppointment}
+            className="bg-medical-600 hover:bg-medical-700"
+          >
+            Book Appointment
           </Button>
         </div>
       </CardFooter>
