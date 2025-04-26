@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -83,7 +82,13 @@ const Login = () => {
               <strong>Doctor:</strong> sarah.johnson@example.com
             </p>
             <p className="text-xs text-gray-500">
-              <strong>Password:</strong> password (for all accounts)
+              <strong>Admin:</strong> admin@medsync.com
+            </p>
+            <p className="text-xs text-gray-500">
+              <strong>Password:</strong> password (for patient/doctor accounts)
+            </p>
+            <p className="text-xs text-gray-500">
+              <strong>Admin Password:</strong> admin123
             </p>
           </div>
         </CardContent>

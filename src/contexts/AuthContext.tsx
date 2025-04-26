@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string, role: "patient" | "doctor") => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (
     name: string,
@@ -24,26 +24,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const login = async (email: string, password: string, role: "patient" | "doctor") => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
     // This is a mock implementation that simulates API call
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
-        let foundUser: User | undefined;
-
-        if (role === "patient") {
-          foundUser = mockPatients.find((p) => p.email === email);
-        } else {
+        // Check if it's a patient
+        let foundUser: User | undefined = mockPatients.find((p) => p.email === email);
+        
+        // If not a patient, check if it's a doctor
+        if (!foundUser) {
           foundUser = mockDoctors.find((d) => d.email === email);
         }
+        
+        // Check for admin (hardcoded for now)
+        if (!foundUser && email === "admin@medsync.com" && password === "admin123") {
+          foundUser = {
+            id: "admin1",
+            name: "System Administrator",
+            email: "admin@medsync.com",
+            role: "admin"
+          };
+        }
 
-        if (foundUser && password === "password") { // Using "password" as mock password for all users
+        if (foundUser && password === "password" || (email === "admin@medsync.com" && password === "admin123")) {
           setUser(foundUser);
           localStorage.setItem("user", JSON.stringify(foundUser));
           toast({
             title: "Login successful",
             description: `Welcome back, ${foundUser.name}!`,
           });
+          
+          // Navigate based on user role
           resolve();
         } else {
           toast({
