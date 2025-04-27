@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import AppointmentCard from "@/components/AppointmentCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, User, Stethoscope } from "lucide-react";
+import { Calendar, Clock, User, Stethoscope, Shield } from "lucide-react";
 import { useAppointments } from "@/contexts/AppointmentContext";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -19,7 +18,6 @@ import {
   TabsList,
   TabsTrigger
 } from "@/components/ui/tabs";
-import { format as dateFormat } from "date-fns";
 
 const DoctorDashboard = () => {
   const { doctorAppointments } = useAppointments();
@@ -43,7 +41,6 @@ const DoctorDashboard = () => {
     );
   }
 
-  // Format date function - moved to the top before being used
   const format = (date: Date, formatStr: string) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -78,13 +75,24 @@ const DoctorDashboard = () => {
     pastAppointments;
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-2">Doctor Dashboard</h1>
-        <p className="text-gray-600 mb-6">
-          Welcome back, Dr. {user.name.split(' ')[1]}
-        </p>
+        <section className="bg-gradient-to-br from-medical-100 to-teal-100 rounded-lg p-8 mb-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="md:w-2/3 mb-6 md:mb-0">
+              <h1 className="text-3xl font-bold mb-2">Welcome back, Dr. {user.name.split(' ')[1]}</h1>
+              <p className="text-gray-700 text-lg">
+                Manage your appointments and provide the best care for your patients.
+              </p>
+            </div>
+            <img 
+              src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+              alt="Doctor with patient" 
+              className="w-full md:w-1/4 rounded-lg shadow-lg"
+            />
+          </div>
+        </section>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
