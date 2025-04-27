@@ -1,5 +1,6 @@
+
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -13,6 +14,11 @@ import { Bell, Calendar, User } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const location = useLocation();
+
+  // Determine if the current page is Doctors or Appointments page
+  const isDoctorsPage = location.pathname === "/doctors";
+  const isAppointmentsPage = location.pathname === "/appointments";
 
   return (
     <nav className="border-b border-gray-200 py-4 bg-white">
@@ -25,9 +31,11 @@ const Navbar = () => {
           <Link to="/" className="text-gray-600 hover:text-medical-600">
             Home
           </Link>
-          <Link to="/doctors" className="text-gray-600 hover:text-medical-600">
-            Find Doctors
-          </Link>
+          {!isDoctorsPage && (
+            <Link to="/doctors" className="text-gray-600 hover:text-medical-600">
+              Find Doctors
+            </Link>
+          )}
           {user && (
             <Link to="/appointments" className="text-gray-600 hover:text-medical-600">
               My Appointments
