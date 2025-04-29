@@ -10,9 +10,11 @@ export const NavLinks = () => {
 
   return (
     <div className="hidden md:flex space-x-6">
-      <Link to="/" className="text-gray-600 hover:text-medical-600">
-        Home
-      </Link>
+      {!isDoctor && (
+        <Link to="/" className="text-gray-600 hover:text-medical-600">
+          Home
+        </Link>
+      )}
       {!isDoctorsPage && !isDoctor && (
         <Link to="/doctors" className="text-gray-600 hover:text-medical-600">
           Find Doctors
